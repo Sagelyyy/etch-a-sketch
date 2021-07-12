@@ -38,27 +38,26 @@ for (i = 0; i < 256; i++){
 let gridSquares = document.getElementsByClassName('gridCell');
 for (i = 0; i < gridSquares.length; i++){
 
-    gridSquares[i].addEventListener("mouseenter", function mouseEnter(e){
-        e.target.style.backgroundColor = hoverColor
-
-    }, false);
 
 
-    gridSquares[i].addEventListener('mouseleave', function beepBoop(event) {
-        if(event.target.className != 'gridfilled'){
-            event.target.style.backgroundColor = bgColor
+    gridSquares[i].addEventListener("mouseenter", mouseEnter)
 
-        }
-    });
+    function mouseEnter(event){
+        event.target.style.backgroundColor = hoverColor
+    }
 
+
+   gridSquares[i].addEventListener('mouseleave', handleEvent)
+
+    function handleEvent(event) {
+        event.target.style.backgroundColor = bgColor
+    }
 
     gridSquares[i].addEventListener('click', function (fillCell) {
         fillCell.target.style.backgroundColor = fillColor
         fillCell.target.className = 'gridFilled'
-        event.target.removeEventListener('mouseleave', beepBoop)
-        
-
-        //fillCell.target.removeEventListener('mouseenter')
+        fillCell.target.removeEventListener('mouseleave', handleEvent)
+        fillCell.target.removeEventListener('mouseenter', mouseEnter)
     })
 
 }
