@@ -1,13 +1,13 @@
 const container = document.querySelector('#container');
+const bgColor = 'white';
+const hoverColor = 'gainsboro';
+const fillColor = 'black'
 
 const flexColLeft = document.createElement('div');
 flexColLeft.style.float = 'left';
 flexColLeft.style.display = "inline-block"
 flexColLeft.style.width = '32%';
 flexColLeft.style.height = '100%';
-flexColLeft.style.backgroundColor = 'red';
-
-
 
 const flexBoxContainer = document.createElement('div');
 flexBoxContainer.classList.add('flexContainer');
@@ -16,6 +16,7 @@ flexBoxContainer.style.justifyContent  = ('center');
 flexBoxContainer.style.flexWrap = 'wrap';
 flexBoxContainer.style.marginLeft = '25%'
 flexBoxContainer.style.width = '955px';
+//flexBoxContainer.style.height = '100px';
 container.appendChild(flexColLeft)
 container.appendChild(flexBoxContainer);
 
@@ -27,7 +28,7 @@ for (i = 0; i < 256; i++){
     flexItem.style.cursor = 'pointer';
     flexItem.style.width = '55px';
     flexItem.style.height = '55px';
-    flexItem.style.backgroundColor = 'blue'
+    flexItem.style.backgroundColor = bgColor
     flexItem.style.border = '2px solid black';
     flexBoxContainer.appendChild(flexItem);
 }
@@ -36,13 +37,28 @@ for (i = 0; i < 256; i++){
 //event to change their color!
 let gridSquares = document.getElementsByClassName('gridCell');
 for (i = 0; i < gridSquares.length; i++){
-    gridSquares[i].addEventListener("mouseenter", function(e){
-        e.target.style.backgroundColor = "pink";
 
-          // reset the color after a short delay
-        setTimeout(function() {
-            e.target.style.backgroundColor = "blue";
-        }, 500);
+    gridSquares[i].addEventListener("mouseenter", function mouseEnter(e){
+        e.target.style.backgroundColor = hoverColor
+
     }, false);
+
+
+    gridSquares[i].addEventListener('mouseleave', function beepBoop(event) {
+        if(event.target.className != 'gridfilled'){
+            event.target.style.backgroundColor = bgColor
+
+        }
+    });
+
+
+    gridSquares[i].addEventListener('click', function (fillCell) {
+        fillCell.target.style.backgroundColor = fillColor
+        fillCell.target.className = 'gridFilled'
+        event.target.removeEventListener('mouseleave', beepBoop)
         
+
+        //fillCell.target.removeEventListener('mouseenter')
+    })
+
 }
