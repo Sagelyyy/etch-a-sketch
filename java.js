@@ -45,13 +45,8 @@ function createGrid(){
 
 
 function destroyGrid(){
-    const flexCell = document.getElementsByClassName('gridCell')
-    const flexCellFilled = document.getElementsByClassName('gridFilled')
-    for (i = 0; i < flexCell.length; i++){
-        flexCellFilled.className = 'gridCell'
-        flexCellFilled[i].style.backgroundColor = bgColor
-        flexCellFilled[i].addEventListener("mouseenter", mouseEnter)
-        flexCellFilled[i].addEventListener('mouseleave', handleEvent)
+    while(flexBoxContainer.firstChild){
+        flexBoxContainer.removeChild(flexBoxContainer.firstChild)
     }
 }
 createGrid()
