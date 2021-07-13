@@ -7,6 +7,12 @@ const gridWidth = '830px'
 const cellHeight = '45px'
 const cellWidth = '45px'
 
+
+let rows = 0
+let columns = 0
+let area = 0
+
+
 const resetButton = document.createElement('button')
 resetButton.id = 'resetGrid'
 resetButton.textContent = 'Reset (PH)'
@@ -18,72 +24,72 @@ flexColLeft.style.float = 'left';
 flexColLeft.style.width = '32%';
 flexColLeft.style.height = '100%';
 
+function createRows(gridRows){
+    for(i = 0; i < gridRows; i++){
+      const flexBoxContainer = document.createElement('div');
+      flexBoxContainer.classList.add('flexContainer');
+      flexBoxContainer.style.display = ('flex');
+      flexBoxContainer.style.justifyContent  = ('center');
+      flexBoxContainer.style.flexWrap = 'wrap';
+      flexBoxContainer.style.marginLeft = '25%';
+      flexBoxContainer.style.width = gridWidth;
+      container.appendChild(flexBoxContainer);
+    }
+  }
 
-const flexBoxContainer = document.createElement('div');
-function createContainer() {
-    flexBoxContainer.classList.add('flexContainer');
-    flexBoxContainer.style.display = ('flex');
-    flexBoxContainer.style.justifyContent  = ('center');
-    flexBoxContainer.style.flexWrap = 'wrap';
-    flexBoxContainer.style.marginLeft = '25%'
-    flexBoxContainer.style.width = gridWidth;
-    container.appendChild(flexBoxContainer);
-}
+
+  function createColumns(gridColumns){
+    const flexBoxContainer = document.getElementsByClassName('flexContainer');
+    for(i = 0; i < rows; i++){
+      for(v=0; v<columns; v++){
+        const flexItem = document.createElement('div');
+        flexItem.classList.add('gridCell');
+        flexItem.style.cursor = 'pointer';
+        flexItem.style.width = cellWidth;
+        flexItem.style.height = cellHeight;
+        flexItem.style.backgroundColor = bgColor;
+        flexItem.style.border = '2px solid black';
+        flexBoxContainer[i].appendChild(flexItem)
+        }
+    }
+  }
 container.appendChild(resetButton);
 container.appendChild(flexColLeft);
 
 
-
-const gridDimensions = []
 let newArea = 0
 document.getElementById('resetGrid').onclick = function getGridArea(){
-    const newGridWidth = window.prompt('New Width?')
-    const newGridHeight = window.prompt('New Height?')
-    newArea = (newGridWidth * newGridHeight)
-    destroyGrid()
-    createGrid()
-    createClicks()
+    const newGridWidth = window.prompt('How many Columns? (16 max)')
+    const newGridHeight = window.prompt('How many Rows? (16 max')
+    if(newGridHeight <= 16 && newGridWidth <= 16){
+        destroyGrid()
+        createGrid(newGridHeight, newGridWidth)
+        createClicks()
+    }else{
+        alert('Must be less than 16!')
+    }
 }
 
 
-//here we are creating all the items(grid sqaures) we need and placing 
-//them in the flex-box container with the class of gridCell
-function createGrid(){
-    if (newArea){
-        for (i = 0; i < newArea; i++){
-            const flexItem = document.createElement('div');
-            flexItem.classList.add('gridCell')
-            flexItem.style.cursor = 'pointer';
-            flexItem.style.width = cellWidth;
-            flexItem.style.height = cellHeight;
-            flexItem.style.backgroundColor = bgColor
-            flexItem.style.border = '2px solid black';
-            flexBoxContainer.appendChild(flexItem);
-        }
-    }else {
-        for (i = 0; i < 256; i++){
-            const flexItem = document.createElement('div');
-            flexItem.classList.add('gridCell')
-            flexItem.style.cursor = 'pointer';
-            flexItem.style.width = cellWidth;
-            flexItem.style.height = cellHeight;
-            flexItem.style.backgroundColor = bgColor
-            flexItem.style.border = '2px solid black';
-            flexBoxContainer.appendChild(flexItem);
-        }
-    }
+function createGrid(r,c){
+    rows = r
+    columns = c
+    area = rows * columns
+    createRows(r);
+    createColumns(c);
 }
 
 
 
 function destroyGrid(){
-    while(flexBoxContainer.firstChild){
-        flexBoxContainer.removeChild(flexBoxContainer.firstChild)
+    const flexBoxContainer = document.getElementsByClassName('flexContainer');
+    for(i = 0; i < flexBoxContainer.length; i++){
+        while(flexBoxContainer[i].firstChild){
+            flexBoxContainer[i].removeChild(flexBoxContainer[i].firstChild)
+        }
     }
 }
-createContainer()
-createGrid()
-createClicks()
+
 
 // we have to seperate the functions for the event listeners so when we
 // later remove the listeners we dont have a scope problem
@@ -117,3 +123,7 @@ function createClicks(){
 
     }
 }
+
+
+createGrid(16, 16)
+createClicks()
