@@ -87,7 +87,7 @@ function createRows(gridRows){
 
 document.getElementById('resetGrid').onclick = function getGridArea(){
     const newGridWidth = window.prompt('How many Columns? (16 max)')
-    const newGridHeight = window.prompt('How many Rows? (16 max')
+    const newGridHeight = window.prompt('How many Rows? (16 max)')
     if(newGridHeight <= 16 && newGridWidth <= 16){
         destroyGrid()
         createGrid(newGridHeight, newGridWidth)
