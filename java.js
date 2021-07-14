@@ -34,7 +34,6 @@ colorizeButton.style.width = '26%';
 colorizeButton.style.height = '2em';
 colorizeButton.style.left = '1%'
 colorizeButton.style.top = '150px'
-//colorizeButton.style.border = 'none';
 colorizeButton.style.fontFamily = 'monospace'
 colorizeButton.style.fontWeight = 'bold'
 colorizeButton.style.fontSize = '30px'
